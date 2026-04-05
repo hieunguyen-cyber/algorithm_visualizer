@@ -1,8 +1,10 @@
 package com.algo.algorithms;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.algo.models.GameState;
 import com.algo.models.GameTreeNode;
-import java.util.*;
 
 /**
  * Alpha-Beta pruning algorithm for game AI.

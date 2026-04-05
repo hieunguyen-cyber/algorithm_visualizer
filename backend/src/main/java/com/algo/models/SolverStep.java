@@ -1,6 +1,7 @@
 package com.algo.models;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a single step in the Sudoku solving process.

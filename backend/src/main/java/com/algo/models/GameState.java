@@ -1,6 +1,7 @@
 package com.algo.models;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a game state for Minimax and Alpha-Beta algorithms.

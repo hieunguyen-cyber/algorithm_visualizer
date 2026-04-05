@@ -1,8 +1,10 @@
 package com.algo;
 
-import com.algo.models.*;
 import com.algo.controllers.SudokuController;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * Integration test for Sudoku solver with visualization.

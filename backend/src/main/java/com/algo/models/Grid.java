@@ -1,6 +1,7 @@
 package com.algo.models;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a 2D grid for pathfinding problems.

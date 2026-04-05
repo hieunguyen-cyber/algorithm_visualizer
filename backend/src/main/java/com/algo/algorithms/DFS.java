@@ -1,8 +1,15 @@
 package com.algo.algorithms;
 
-import com.algo.models.Node;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Stack;
+
 import com.algo.models.Grid;
-import java.util.*;
+import com.algo.models.Node;
 
 /**
  * Depth-First Search (DFS) pathfinding algorithm.

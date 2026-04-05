@@ -1,10 +1,11 @@
 package com.algo.controllers;
 
-import com.algo.models.*;
-import com.algo.algorithms.*;
+import com.algo.algorithms.AlphaBeta;
+import com.algo.algorithms.Minimax;
+import com.algo.models.GameState;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 /**
  * Controller for game/AI algorithm requests (Minimax, Alpha-Beta).

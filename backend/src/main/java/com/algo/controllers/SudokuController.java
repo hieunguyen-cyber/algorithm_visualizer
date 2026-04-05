@@ -1,11 +1,15 @@
 package com.algo.controllers;
 
-import com.algo.models.*;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonArray;
-
 import java.util.List;
+
+import com.algo.models.BacktrackingSolver;
+import com.algo.models.BacktrackingWithForwardCheckingSolver;
+import com.algo.models.BacktrackingWithMRVSolver;
+import com.algo.models.ISudokuSolver;
+import com.algo.models.SolverStep;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 /**
  * Controller for Sudoku validation and solving with visualization.
