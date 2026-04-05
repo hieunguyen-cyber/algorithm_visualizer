@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Visualizer - Educational Tool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>⚙️ Algorithm Visualizer</h1>
+                <p>Visualize classic search and game AI algorithms in action</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <button class="nav-btn active" data-tab="pathfinding">
+                <span>🔍</span> Pathfinding
+            </button>
+            <button class="nav-btn" data-tab="game">
+                <span>🎮</span> Tic-Tac-Toe
+            </button>
+            <button class="nav-btn" data-tab="sudoku">
+                <span>🧩</span> Sudoku
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- PATHFINDING SECTION -->
+            <section id="pathfinding-section" class="section active">
+                <div class="section-container">
+                    
+                    <!-- Controls Panel -->
+                    <div class="control-panel">
+                        <h2>Pathfinding Controls</h2>
+                        
+                        <div class="control-group">
+                            <label for="algo-select">Algorithm:</label>
+                            <select id="algo-select">
+                                <option value="astar">A* Search</option>
+                                <option value="astar-dijkstra">A* (No Pruning/Dijkstra)</option>
+                                <option value="bfs">Breadth-First Search (BFS)</option>
+                                <option value="dfs">Depth-First Search (DFS)</option>
+                                <option value="dijkstra">Dijkstra's Algorithm</option>
+                                <option value="ucs">Uniform Cost Search (UCS)</option>
+                                <option value="greedy">Greedy Best-First Search</option>
+                                <option value="dls">Depth-Limited Search (DLS)</option>
+                                <option value="iddfs">Iterative Deepening DFS (IDDFS)</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label>Grid Size:</label>
+                            <div class="grid-size-controls">
+                                <div class="size-input-pair">
+                                    <label for="grid-width">Width:</label>
+                                    <input type="range" id="grid-width" min="10" max="60" value="20" step="2">
+                                    <span id="grid-width-display">20</span>
+                                </div>
+                                <div class="size-input-pair">
+                                    <label for="grid-height">Height:</label>
+                                    <input type="range" id="grid-height" min="10" max="60" value="20" step="2">
+                                    <span id="grid-height-display">20</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label>Grid Editing Tools:</label>
+                            <div class="tool-buttons">
+                                <button id="tool-draw" class="tool-btn" title="Draw walls">🖌️ Wall</button>
+                                <button id="tool-erase" class="tool-btn" title="Erase walls">✏️ Erase</button>
+                                <button id="tool-start" class="tool-btn" title="Set start point">🟢 Start</button>
+                                <button id="tool-goal" class="tool-btn" title="Set goal point">🔴 Goal</button>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="speed-control">Speed:</label>
+                            <input type="range" id="speed-control" min="10" max="500" value="100" step="10">
+                            <span id="speed-display">Medium</span>
+                        </div>
+
+                        <div class="button-group">
+                            <button id="start-btn" class="btn btn-primary">▶ Start</button>
+                            <button id="pause-btn" class="btn btn-secondary" disabled>⏸ Pause</button>
+                            <button id="reset-btn" class="btn btn-secondary">↻ Reset</button>
+                            <button id="step-btn" class="btn btn-secondary">→ Step</button>
+                        </div>
+
+                        <div class="info-box">
+                            <div class="info-item">
+                                <span>Visited:</span>
+                                <span id="visited-count">0</span>
+                            </div>
+                            <div class="info-item">
+                                <span>Path Length:</span>
+                                <span id="path-length">0</span>
+                            </div>
+                            <div class="info-item">
+                                <span>Times (g/h/f):</span>
+                                <span id="costs-display">-</span>
+                            </div>
+                        </div>
+
+                        <div class="legend">
+                            <h3>Legend</h3>
+                            <div class="legend-item">
+                                <div class="legend-color start"></div>
+                                <span>Start</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color goal"></div>
+                                <span>Goal</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color wall"></div>
+                                <span>Wall</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color open"></div>
+                                <span>Open Set</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color closed"></div>
+                                <span>Closed Set</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color path"></div>
+                                <span>Final Path</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grid Visualization -->
+                    <div class="visualization">
+                        <div class="grid-container">
+                            <canvas id="pathfinding-canvas"></canvas>
+                        </div>
+                        <div class="node-info" id="node-info" style="display: none;">
+                            <h4>Node Info</h4>
+                            <div id="node-details"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- GAME SECTION -->
+            <section id="game-section" class="section">
+                <div class="section-container">
+                    
+                    <!-- Game Controls -->
+                    <div class="control-panel">
+                        <h2>Tic-Tac-Toe Game</h2>
+                        
+                        <div class="control-group">
+                            <label>Board Size:</label>
+                            <div class="grid-size-controls">
+                                <div class="size-input-pair">
+                                    <label for="game-width">Width:</label>
+                                    <input type="range" id="game-width" min="3" max="10" value="3" step="1">
+                                    <span id="game-width-display">3</span>
+                                </div>
+                                <div class="size-input-pair">
+                                    <label for="game-height">Height:</label>
+                                    <input type="range" id="game-height" min="3" max="10" value="3" step="1">
+                                    <span id="game-height-display">3</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="game-win-k">Win Condition (k-in-a-row):</label>
+                            <input type="range" id="game-win-k" min="3" max="5" value="3" step="1">
+                            <span id="game-win-k-display">3</span>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="game-algo">AI Algorithm:</label>
+                            <select id="game-algo">
+                                <option value="minimax">Minimax</option>
+                                <option value="alphabeta">Alpha-Beta Pruning</option>
+                                <option value="depth-limited">Depth-Limited Minimax</option>
+                                <option value="heuristic">Heuristic Evaluation</option>
+                            </select>
+                        </div>
+
+                        <div class="button-group">
+                            <button id="game-new-btn" class="btn btn-primary">🎮 New Game</button>
+                            <button id="game-reset-btn" class="btn btn-secondary">↻ Reset</button>
+                        </div>
+
+                        <div class="game-status" id="game-status">
+                            <h3>Status:</h3>
+                            <p id="status-text">Configure board and click "New Game" to start</p>
+                        </div>
+
+                        <div class="info-box">
+                            <div class="info-item">
+                                <span>Moves Made:</span>
+                                <span id="moves-count">0</span>
+                            </div>
+                            <div class="info-item">
+                                <span>Tree Nodes:</span>
+                                <span id="tree-nodes">0</span>
+                            </div>
+                            <div class="info-item">
+                                <span>Pruned Nodes:</span>
+                                <span id="pruned-nodes">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Game Board -->
+                    <div class="visualization">
+                        <div class="game-container">
+                            <div id="game-board" class="game-board"></div>
+                            <div id="tree-visualization" class="tree-vis"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SUDOKU SECTION -->
+            <section id="sudoku-section" class="section">
+                <div class="section-container">
+                    
+                    <!-- Sudoku Controls Panel -->
+                    <div class="control-panel">
+                        <h2>Sudoku Solver</h2>
+                        
+                        <!-- Speed Control -->
+                        <div class="control-group">
+                            <label for="sudoku-speed">Animation Speed:</label>
+                            <select id="sudoku-speed">
+                                <option value="slow">Slow (500ms)</option>
+                                <option value="normal" selected>Normal (100ms)</option>
+                                <option value="fast">Fast (10ms)</option>
+                            </select>
+                        </div>
+
+                        <!-- Input Mode -->
+                        <div class="control-group">
+                            <label>Input Numbers (1-9) or Delete to clear:</label>
+                            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-top: 10px;">
+                                <button id="sudoku-num-1" class="btn btn-small">1</button>
+                                <button id="sudoku-num-2" class="btn btn-small">2</button>
+                                <button id="sudoku-num-3" class="btn btn-small">3</button>
+                                <button id="sudoku-num-4" class="btn btn-small">4</button>
+                                <button id="sudoku-num-5" class="btn btn-small">5</button>
+                                <button id="sudoku-num-6" class="btn btn-small">6</button>
+                                <button id="sudoku-num-7" class="btn btn-small">7</button>
+                                <button id="sudoku-num-8" class="btn btn-small">8</button>
+                                <button id="sudoku-num-9" class="btn btn-small">9</button>
+                                <button id="sudoku-btn-delete" class="btn btn-small">🗑</button>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="button-group">
+                            <button id="sudoku-btn-solve" class="btn btn-primary">▶ Solve</button>
+                            <button id="sudoku-btn-reset" class="btn btn-secondary">↻ Reset</button>
+                        </div>
+
+                        <!-- Status Display -->
+                        <div class="info-box">
+                            <div class="info-item">
+                                <span>Status:</span>
+                                <span id="sudoku-status">Ready</span>
+                            </div>
+                            <div class="info-item">
+                                <span>Steps:</span>
+                                <span id="sudoku-steps">0</span>
+                            </div>
+                            <div class="info-item">
+                                <span>Time:</span>
+                                <span id="sudoku-time">0ms</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sudoku Board -->
+                    <div class="visualization">
+                        <div id="sudoku-board" class="sudoku-board"></div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Algorithm Visualizer • Educational Tool • <a href="https://github.com">GitHub</a></p>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="pathfinding.js"></script>
+    <script src="game.js"></script>
+    <script src="sudoku-solver.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
