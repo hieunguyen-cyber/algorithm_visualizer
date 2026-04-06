@@ -17,8 +17,24 @@ import java.util.*;
  * Provides REST API endpoints for pathfinding, game algorithms, and Sudoku.
  */
 public class AlgorithmServer {
-    private static final int PORT = 8080;
+    private static final int PORT = getPort();
     private static final String API_BASE = "/api";
+    
+    /**
+     * Get port from environment variable or use default.
+     * Render provides PORT env variable, default to 8080 for local dev.
+     */
+    private static int getPort() {
+        String portEnv = System.getenv("PORT");
+        if (portEnv != null && !portEnv.isEmpty()) {
+            try {
+                return Integer.parseInt(portEnv);
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid PORT env variable: " + portEnv);
+            }
+        }
+        return 8080;
+    }
     
     private HttpServer server;
     private AlgorithmController algorithmController;

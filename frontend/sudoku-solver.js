@@ -204,7 +204,7 @@ class SudokuSolver {
         }
 
         try {
-            const response = await fetch('http://localhost:8080/api/sudoku/solve-with-steps', {
+            const response = await fetch(CONFIG.API_BASE + '/sudoku/solve-with-steps', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ board: board2D })

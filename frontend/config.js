@@ -2,8 +2,20 @@
  * Configuration constants
  */
 
+// Dynamically determine API base URL
+// For development: use localhost:8080
+// For production (Render): use the same origin as frontend
+const getApiBase = () => {
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        // Local development - use hardcoded port
+        return 'http://localhost:8080/api';
+    }
+    // Production - use the same origin (Render will proxy or serve both)
+    return window.location.origin + '/api';
+};
+
 const CONFIG = {
-    API_BASE: 'http://localhost:8080/api',
+    API_BASE: getApiBase(),
     
     PATHFINDING: {
         DEFAULT_GRID_SIZE: 20,
