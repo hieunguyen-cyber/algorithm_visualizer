@@ -1,0 +1,40 @@
+# Version control
+.git
+.gitignore
+
+# Build artifacts (will be rebuilt)
+target
+*.class
+*.jar
+*.war
+
+# IDE
+.idea
+.vscode
+*.iml
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+*.log.*
+
+# Node (frontend not needed in backend container)
+node_modules
+npm-debug.log
+
+# Dependencies (will be downloaded during build)
+.m2
+
+# Misc
+*.md
+.mvn/wrapper/dists
+deprecated
+temp
+tmp
