@@ -5,14 +5,12 @@ FROM maven:3.9-eclipse-temurin-17 AS builder
 
 WORKDIR /build
 
-# Copy pom.xml and source code
-COPY pom.xml .
-COPY src ./src
-COPY .mvn ./.mvn
-COPY mvnw ./mvnw
+# Copy entire backend directory (all files from build context)
+# When Render sets Root Directory to 'backend', these files will be available
+COPY . .
 
 # Build the application
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime with lightweight JRE
 FROM eclipse-temurin:17-jre-jammy
