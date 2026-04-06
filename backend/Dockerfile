@@ -1,7 +1,7 @@
 # Multi-stage Docker build for Algorithm Visualizer backend
 
 # Stage 1: Build with Maven
-FROM maven:3.8.6-openjdk-11 AS builder
+FROM maven:3.9-eclipse-temurin-17 AS builder
 
 WORKDIR /build
 
@@ -15,7 +15,7 @@ COPY mvnw ./mvnw
 RUN ./mvnw clean package -DskipTests
 
 # Stage 2: Runtime with lightweight JRE
-FROM openjdk:11-jre-slim
+FROM eclipse-temurin:17-jre-jammy
 
 # Set working directory
 WORKDIR /app
