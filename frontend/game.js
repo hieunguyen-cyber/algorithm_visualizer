@@ -73,7 +73,7 @@ class GameVisualizer {
             return;
         }
 
-        const result = await API.gameMove(row, col, player);
+        const result = await API.gameMove(this.board, row, col, player, this.winCondition);
         console.log('Move result:', result);
         
         if (result && result.success) {
@@ -131,7 +131,7 @@ class GameVisualizer {
         
         console.log(`🤖 AI move starting (${algorithm}, depth=${depth})`);
         try {
-            const result = await API.gameAIMove(algorithm, depth);
+            const result = await API.gameAIMove(this.board, algorithm, depth, this.winCondition);
             console.log('AI move result:', result);
             
             this.aiMoveInProgress = false;
@@ -198,7 +198,7 @@ class GameVisualizer {
 
     async getAIMove() {
         const algorithm = document.getElementById('game-algo').value;
-        const result = await API.gameAIMove(algorithm);
+        const result = await API.gameAIMove(this.board, algorithm, this.calculateDepthLimit(), this.winCondition);
         
         if (result && result.success) {
             this.board = result.board;

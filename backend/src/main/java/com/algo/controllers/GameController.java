@@ -35,12 +35,12 @@ public class GameController {
             // Create square board matching the larger dimension
             int boardSize = Math.max(boardWidth, boardHeight);
             
-            currentGame = new GameState(boardSize);
-            
             // Validate win condition
-            if (winCondition < 3 || winCondition > 5) {
-                winCondition = 3;
+            if (winCondition < 3 || winCondition > boardSize) {
+                winCondition = Math.min(3, boardSize);
             }
+            
+            currentGame = new GameState(boardSize, winCondition);
             
             System.out.println("🎮 Game initialized: " + boardWidth + "x" + boardHeight + " board (size=" + boardSize + "), win=" + winCondition);
             

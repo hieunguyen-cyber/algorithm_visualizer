@@ -1,0 +1,16 @@
+# Vercel and Build Output
+/public/
+.vercel/
+node_modules/
+
+# Java/Maven
+target/
+*.jar
+*.war
+*.class
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.DS_Store

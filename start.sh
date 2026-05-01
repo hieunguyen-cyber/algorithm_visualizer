@@ -43,7 +43,7 @@ echo ""
 
 # Start backend
 echo -e "${YELLOW}🔧 Starting backend server on port 8080...${NC}"
-java -jar target/algorithm-visualizer-1.0.0-jar-with-dependencies.jar &
+java -jar target/algorithm-visualizer-1.0.0.jar &
 BACKEND_PID=$!
 
 sleep 2

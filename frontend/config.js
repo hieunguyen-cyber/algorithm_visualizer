@@ -3,7 +3,7 @@
  */
 
 const CONFIG = {
-    API_BASE: 'http://localhost:8080/api',
+    API_BASE: '/api',
     
     PATHFINDING: {
         DEFAULT_GRID_SIZE: 20,
@@ -132,14 +132,14 @@ const API = {
         }
     },
 
-    async gameMove(row, col, player) {
+    async gameMove(board, row, col, player, winCondition) {
         try {
             const response = await fetch(CONFIG.API_BASE + '/game/move', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ row, col, player }),
+                body: JSON.stringify({ board, row, col, player, winCondition }),
             });
             return await response.json();
         } catch (error) {
@@ -148,14 +148,14 @@ const API = {
         }
     },
 
-    async gameAIMove(algorithm = 'minimax', depth = 10) {
+    async gameAIMove(board, algorithm = 'minimax', depth = 10, winCondition = 3) {
         try {
             const response = await fetch(CONFIG.API_BASE + '/game/ai-move', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ algorithm, depth }),
+                body: JSON.stringify({ board, algorithm, depth, winCondition }),
             });
             return await response.json();
         } catch (error) {

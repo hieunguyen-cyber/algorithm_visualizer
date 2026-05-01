@@ -9,6 +9,7 @@ import java.util.List;
 public class GameState {
     private int[][] board;           // 0 = empty, 1 = human, 2 = AI
     private int boardSize;
+    private int winCondition;
     private boolean isXNext;
     private int moveCount;
     public List<GameTreeNode> treeNodes;
@@ -17,9 +18,10 @@ public class GameState {
     public static final int HUMAN = 1;
     public static final int AI = 2;
 
-    public GameState(int boardSize) {
+    public GameState(int boardSize, int winCondition) {
         this.boardSize = boardSize;
         this.board = new int[boardSize][boardSize];
+        this.winCondition = winCondition;
         this.isXNext = true;
         this.moveCount = 0;
         this.treeNodes = new ArrayList<>();
@@ -28,6 +30,7 @@ public class GameState {
     public GameState(GameState other) {
         this.boardSize = other.boardSize;
         this.board = new int[boardSize][boardSize];
+        this.winCondition = other.winCondition;
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 this.board[i][j] = other.board[i][j];
@@ -83,43 +86,67 @@ public class GameState {
     public int getWinner() {
         // Check rows
         for (int i = 0; i < boardSize; i++) {
-            boolean allX = true, allO = true;
-            for (int j = 0; j < boardSize; j++) {
-                if (board[i][j] != HUMAN) allX = false;
-                if (board[i][j] != AI) allO = false;
+            for (int j = 0; j <= boardSize - winCondition; j++) {
+                int first = board[i][j];
+                if (first == EMPTY) continue;
+                boolean win = true;
+                for (int k = 1; k < winCondition; k++) {
+                    if (board[i][j + k] != first) {
+                        win = false;
+                        break;
+                    }
+                }
+                if (win) return first;
             }
-            if (allX) return HUMAN;
-            if (allO) return AI;
         }
 
         // Check columns
         for (int j = 0; j < boardSize; j++) {
-            boolean allX = true, allO = true;
-            for (int i = 0; i < boardSize; i++) {
-                if (board[i][j] != HUMAN) allX = false;
-                if (board[i][j] != AI) allO = false;
+            for (int i = 0; i <= boardSize - winCondition; i++) {
+                int first = board[i][j];
+                if (first == EMPTY) continue;
+                boolean win = true;
+                for (int k = 1; k < winCondition; k++) {
+                    if (board[i + k][j] != first) {
+                        win = false;
+                        break;
+                    }
+                }
+                if (win) return first;
             }
-            if (allX) return HUMAN;
-            if (allO) return AI;
         }
 
-        // Check diagonals
-        boolean allX = true, allO = true;
-        for (int i = 0; i < boardSize; i++) {
-            if (board[i][i] != HUMAN) allX = false;
-            if (board[i][i] != AI) allO = false;
+        // Check diagonals (top-left to bottom-right)
+        for (int i = 0; i <= boardSize - winCondition; i++) {
+            for (int j = 0; j <= boardSize - winCondition; j++) {
+                int first = board[i][j];
+                if (first == EMPTY) continue;
+                boolean win = true;
+                for (int k = 1; k < winCondition; k++) {
+                    if (board[i + k][j + k] != first) {
+                        win = false;
+                        break;
+                    }
+                }
+                if (win) return first;
+            }
         }
-        if (allX) return HUMAN;
-        if (allO) return AI;
 
-        allX = true;
-        allO = true;
-        for (int i = 0; i < boardSize; i++) {
-            if (board[i][boardSize - 1 - i] != HUMAN) allX = false;
-            if (board[i][boardSize - 1 - i] != AI) allO = false;
+        // Check diagonals (top-right to bottom-left)
+        for (int i = 0; i <= boardSize - winCondition; i++) {
+            for (int j = winCondition - 1; j < boardSize; j++) {
+                int first = board[i][j];
+                if (first == EMPTY) continue;
+                boolean win = true;
+                for (int k = 1; k < winCondition; k++) {
+                    if (board[i + k][j - k] != first) {
+                        win = false;
+                        break;
+                    }
+                }
+                if (win) return first;
+            }
         }
-        if (allX) return HUMAN;
-        if (allO) return AI;
 
         return EMPTY; // No winner
     }
@@ -146,4 +173,5 @@ public class GameState {
     public boolean isXNext() { return isXNext; }
     public int getMoveCount() { return moveCount; }
     public int getBoardSize() { return boardSize; }
+    public int getWinCondition() { return winCondition; }
 }
